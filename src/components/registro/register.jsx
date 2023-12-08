@@ -13,6 +13,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth } from '../services/fireBaseConfig';
+import {  useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
     return (
@@ -39,20 +40,26 @@ export default function SignUp() {
         });
     };
 
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
   
     const [createUserWithEmailAndPassword, user, loading, error] =
       useCreateUserWithEmailAndPassword(auth);
   
-    function handleSignOut(e) {
-      e.preventDefault();
-      createUserWithEmailAndPassword(email, password);
-    }
-  
-    if (loading) {
-      return <p>carregando...</p>;
-    }
+      function handleSignOut(e) {
+        e.preventDefault();
+        createUserWithEmailAndPassword(email, password)
+          .then(() => {
+            // Redirecionar para a tela de login após o registro bem-sucedido
+            navigate('/');
+          })
+          .catch((error) => {
+            console.error('Erro no registro:', error.message);
+          });
+      }
+    
     return (
         <ThemeProvider theme={defaultTheme}>
             <Container component="main" maxWidth="xs">
