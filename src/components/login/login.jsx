@@ -11,6 +11,12 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { auth } from '../services/fireBaseConfig';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { useNavigate } from 'react-router-dom';
+
+
+
 
 
 
@@ -43,6 +49,27 @@ export default function SignIn() {
     });
   };
 
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [signInWithEmailAndPassword, user, loading, error] =
+    useSignInWithEmailAndPassword(auth);
+
+  function handleSignIn(e) {
+    e.preventDefault();
+    signInWithEmailAndPassword(email, password);
+  }
+
+  if (loading) {
+    return <p>carregando...</p>;
+  }
+
+  if (user) {
+    navigate('/homepage'); // Redirecionar para a homepage após o login bem-sucedido
+    return null; // ou qualquer outra coisa que você queira renderizar enquanto redireciona
+  }
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
@@ -69,6 +96,7 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -79,7 +107,7 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
-
+              onChange={(e) => setPassword(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -90,6 +118,7 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={handleSignIn}
             >
               Login
             </Button>

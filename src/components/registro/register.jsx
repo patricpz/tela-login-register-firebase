@@ -39,27 +39,20 @@ export default function SignUp() {
         });
     };
 
-    const defaultTheme = createTheme();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setlastName] = useState('');
-    const [
-      createUserWithEmailAndPassword,
-      user,
-      loading,
-      error,
-    ] = useCreateUserWithEmailAndPassword(auth);
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
   
-    function handleSingIn() {
+    const [createUserWithEmailAndPassword, user, loading, error] =
+      useCreateUserWithEmailAndPassword(auth);
+  
+    function handleSignOut(e) {
       e.preventDefault();
-      useCreateUserWithEmailAndPassword(email, password, firstName, lastName)
+      createUserWithEmailAndPassword(email, password);
     }
-    
+  
     if (loading) {
-      return <p>Loading...</p>;
+      return <p>carregando...</p>;
     }
-
     return (
         <ThemeProvider theme={defaultTheme}>
             <Container component="main" maxWidth="xs">
@@ -81,7 +74,7 @@ export default function SignUp() {
                     <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
-                                <TextField
+                                {/* <TextField
                                     autoComplete="given-name"
                                     name="firstName"
                                     required
@@ -101,9 +94,9 @@ export default function SignUp() {
                                     label="Sobre Nome"
                                     name="lastName"
                                     autoComplete="family-name"
-                                    onChange={(e) => setFirstName(e.target.value)}
+                                    onChange={(e) => setLastName(e.target.value)}
 
-                                />
+                                /> */}
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
@@ -140,12 +133,12 @@ export default function SignUp() {
                             fullWidth
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
-                            onClick={handleSingIn}
+                            onClick={handleSignOut}
                         >Cadastar
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <RouterLink to="/" variant="body2"> 
+                                <RouterLink to="/" variant="body2">
                                     Ja possui uma conta? Entrar
                                 </RouterLink>
                             </Grid>
