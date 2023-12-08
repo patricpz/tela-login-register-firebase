@@ -109,10 +109,10 @@ export default function SignIn() {
               autoComplete="current-password"
               onChange={(e) => setPassword(e.target.value)}
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Lembre de mim"
-            />
+            /> */}
             <Button
               type="submit"
               fullWidth
@@ -124,12 +124,12 @@ export default function SignIn() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <RouterLink to="#" variant="body2"> {/* Use RouterLink para navegação interna */}
+                {/* <RouterLink to="#" variant="body2"> 
                   Esqueceu sua senha?
-                </RouterLink>
+                </RouterLink>  */}
               </Grid>
               <Grid item>
-                <RouterLink to="/register" variant="body2"> {/* Use RouterLink para navegação interna */}
+                <RouterLink to="/register" variant="body2"> 
                   Não tem uma conta? Inscrever-se
                 </RouterLink>
               </Grid>
